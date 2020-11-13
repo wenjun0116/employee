@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiufeng.mapper.CityMapper">
+    <resultMap id="BaseResult" type="com.qiufeng.domain.City">
+        <id         column="id"             property="id"           />
+        <result     column="name"           property="name"         />
+        <result     column="parent_id"      property="parentId"     />
+    </resultMap>
+
+    <sql id="citySql">
+        id,name,parent_id
+    </sql>
+
+    <select id="findCityById" resultMap="BaseResult">
+        SELECT
+        <include refid="citySql"/>
+        FROM china
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BaseResult">
+        SELECT
+        <include refid="citySql"/>
+        FROM china
+    </select>
+</mapper>

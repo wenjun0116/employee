@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiufeng.mapper.EmployeeMapper">
+    <resultMap id="BaseResult" type="com.qiufeng.domain.Employee">
+        <id     column="id"             property="id"           />
+        <result column="name"           property="name"         />
+        <result column="password"       property="password"     />
+        <result column="age"            property="age"          />
+        <result column="sex"            property="sex"          />
+        <result column="phone"          property="phone"        />
+        <result column="province_id"    property="provinceId"   />
+        <result column="city_id"        property="cityId"       />
+        <result column="head_image"     property="headImage"    />
+        <result column="auth"           property="auth"         />
+    </resultMap>
+
+    <sql id="employeeSql">
+        id,name,password,age,sex,phone,province_id,city_id,head_image,auth
+    </sql>
+
+    <insert id="saveEmployee">
+        INSERT INTO employee(name,password,age,sex,phone,province_id,city_id,head_image,auth)
+        VALUES(#{name},#{password},#{age},#{sex},#{phone},#{provinceId},#{cityId},#{headImage},#{auth})
+    </insert>
+
+    <update id="updateEmployee">
+        UPDATE SET name = #{name},password = #{password},age = #{age},sex = #{age},phone = #{phone},
+        province_id = #{provinceId},#{cityId},#{headImage},#{auth}
+        FROM employee
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteEmployee" parameterType="long">
+        DELETE FROM employee WHERE id = #{id}
+    </delete>
+
+    <select id="findEmployeeById" resultMap="BaseResult">
+        SELECT
+        <include refid="employeeSql"/>
+        FROM employee
+        WHERE id = #{id}
+    </select>
+
+    <select id="login" resultMap="BaseResult">
+        SELECT
+        <include refid="employeeSql"/>
+        FROM employee
+        WHERE name = #{name} AND password = #{password}
+    </select>
+
+    <select id="findAll" resultMap="BaseResult">
+        SELECT
+        <include refid="employeeSql"/>
+        FROM employee
+    </select>
+</mapper>
